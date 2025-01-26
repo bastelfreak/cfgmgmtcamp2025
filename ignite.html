@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vox Pupuli - Community Update</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style type="text/css">
+      @font-face {
+        font-family: "Yanone Kaffeesatz";
+        font-style: normal;
+        font-weight: 400;
+        src: local("Yanone Kaffeesatz Regular"),
+          local("YanoneKaffeesatz-Regular"),
+          url(YDAoLskQQ5MOAgvHUQCcLbvy90DtE_Pg_qiF9bHvTzw.ttf)
+            format("truetype");
+      }
+      @font-face {
+        font-family: "Ubuntu Mono";
+        font-style: normal;
+        font-weight: 400;
+        src: local("Ubuntu Mono Regular"), local("UbuntuMono-Regular"),
+          url(ViZhet7Ak-LRXZMXzuAfkZ0EAVxt0G0biEntp43Qt6E.ttf)
+            format("truetype");
+      }
+      @font-face {
+        font-family: "Droid Serif";
+        font-style: normal;
+        font-weight: 400;
+        src: local("Droid Serif Regular"), local("DroidSerif-Regular"),
+          url(0AKsP294HTD-nvJgucYTaJ0EAVxt0G0biEntp43Qt6E.ttf)
+            format("truetype");
+      }
+      @font-face {
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        src: local("Nunito Sans Regular"), local("NunitoSans-Regular"),
+          url(NunitoSans-Regular.ttf)
+            format("truetype");
+      }
+      body {
+        font-family: "Nunito Sans";
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Yanone Kaffeesatz";
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content {
+        background-image: url(blue-skies.jpg);
+        background-size: cover;
+      }
+      .remark-slide-content h1 {
+        font-size: 3em;
+      }
+      .remark-slide-content h2 {
+        font-size: 2em;
+      }
+      .remark-slide-content h3 {
+        font-size: 1.6em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p {
+        line-height: 1.25em;
+      }
+      .red {
+        color: #fa0000;
+      }
+      .large {
+        font-size: 2em;
+      }
+      a,
+      a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code,
+      .remark-inline-code {
+        font-family: "Ubuntu Mono";
+      }
+      .remark-code-line-highlighted {
+        background-color: #373832;
+      }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverseold {
+        background: #09194F;
+        background-image: url(dots.png), url(BD_Wortmarke_weiss.png);
+        background-repeat: no-repeat;
+        background-position: top 12px left 20px, top 12px right 20px;
+        background-size: 30%, 10%;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverseold h1,
+      .inverseold h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+      .inverse, .inversedoubleheading {
+        background: #09194F;
+        background-image: url(dots.png), url(BD_Wortmarke_weiss.png), url(circle.png);
+        background-repeat: no-repeat;
+        background-position: top 12px left 20px, top 12px right 20px, center center;
+        background-size: 30%, 10%, 50%;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1,
+      .inverse h2,
+      .inversedoubleheading h1,
+      .inversedoubleheading h2 {
+        color: #f3f3f3;
+      }
+      .inverse h2 {
+        line-height: 0.8em;
+        margin-top: 0.8em;
+      }
+      .inverse h1 {
+        margin-top: 0em;
+        line-height: 1.1em;
+      }
+      .inversedoubleheading h1 {
+        margin-top: -1em;
+        line-height: 1.1em;
+      }
+      .inversedoubleheading h2 {
+        line-height: 0.8em;
+        margin-top: 0.8em;
+      }
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top: 151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first,
+      #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+      /* Two-column layout */
+      .puppetlogo img {
+        width: 95%;
+      }
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+      .left-column h2:last-of-type,
+      .left-column h3:last-child {
+        color: #000;
+      }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+      .right-column .something img {
+        width: 100%;
+        height: 550px;
+      }
+      .right-column .smallimg img {
+        width: 90%;
+      }
+      .right-column .nowidth img {
+        width: auto;
+      }
+      .right-column-center {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+        text-align: center;
+      }
+      .right-column img {
+        width: 100%;
+      }
+      @page {
+        size: 1920px 1080px;
+        margin: 0;
+      }
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+          size: 1920px 1080px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# Vox Pupuli<br/> Community Update
+
+
+???
+
+---
+
+## $ whoami
+<img src="bastelfreak2.jpg" alt="drawing" style="float: right;width: 400px;"/>
+
+* Tim 'bastelfreak' Meusel
+
+* Puppet Contributor since 2012
+
+* Merging stuff on [Vox Pupuli](https://voxpupuli.org/) (Puppet Community) since 2015
+
+* Vox Pupuli Project Management Committee member
+
+* Senior IT Automation Consultant at [betadots](https://betadots.de/)
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+
+???
+
+*
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+]
+
+.right-column[
+* Maintain 178 Puppet modules
+
+  * And Rubygems!
+
+* Be helpful and polite to each other
+
+]
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+]
+
+.right-column[
+* Maintain 178 Puppet modules
+
+  * And Rubygems!
+
+* Be helpful and polite to each other
+
+* Be open-minded to people and technology
+
+* Provide a home for orphaned Puppet modules
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+]
+
+.right-column[
+* Maintain 178 Puppet modules
+
+  * And Rubygems!
+
+* Be helpful and polite to each other
+
+* Be open-minded to people and technology
+
+* Provide a home for orphaned Puppet modules
+
+* Unite lonely module and tooling authors to a collective
+
+* Ensure continued development for our code
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+]
+
+.right-column[
+* Amount of Vox Pupuli members with merge permissions
+
+* 186 people last year at cfgmgtcamp, 211 right now!
+
+![img](contributors.svg)
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* 161 members in the GitHub org with merge access in 2022, 186 last year, 211 right now.
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+]
+
+.right-column[
+* Sysadmins maintaining Puppet in their Company
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+]
+
+.right-column[
+* Sysadmins maintaining Puppet in their Company
+
+* Consultants that extend Puppet modules for a customer
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+]
+
+.right-column[
+* Sysadmins maintaining Puppet in their Company
+
+* Consultants that extend Puppet modules for a customer
+
+* Domain specific experts (e.g. RabbitMQ)
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+]
+
+.right-column[
+* Sysadmins maintaining Puppet in their Company
+
+* Consultants that extend Puppet modules for a customer
+
+* Domain specific experts (e.g. RabbitMQ)
+
+* Puppet/Perforce employees
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+]
+
+.right-column[
+
+* We have awesome tooling to scale development and handle contributions
+
+* [github.com/voxpupuli/voxpupuli-test](https://github.com/voxpupuli/voxpupuli-test?tab=readme-ov-file#voxpupuli-test-gem) - unit testing & static code validation
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+]
+
+.right-column[
+
+* We have awesome tooling to scale development and handle contributions
+
+* [github.com/voxpupuli/voxpupuli-test](https://github.com/voxpupuli/voxpupuli-test?tab=readme-ov-file#voxpupuli-test-gem) - unit testing & static code validation
+
+* [github.com/voxpupuli/voxpupuli-acceptance](https://github.com/voxpupuli/voxpupuli-acceptance?tab=readme-ov-file#voxpupuli-acceptance-gem) - Beaker acceptance testing
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+]
+
+.right-column[
+
+* We have awesome tooling to scale development and handle contributions
+
+* [github.com/voxpupuli/voxpupuli-test](https://github.com/voxpupuli/voxpupuli-test?tab=readme-ov-file#voxpupuli-test-gem) - unit testing & static code validation
+
+* [github.com/voxpupuli/voxpupuli-acceptance](https://github.com/voxpupuli/voxpupuli-acceptance?tab=readme-ov-file#voxpupuli-acceptance-gem) - Beaker acceptance testing
+
+* [github.com/voxpupuli/voxpupuli-release](https://github.com/voxpupuli/voxpupuli-release?tab=readme-ov-file#vox-pupuli-release-gem) - Creates and publishes module releases
+
+* [github.com/voxpupuli/gha-puppet](https://github.com/voxpupuli/gha-puppet/tree/v2?tab=readme-ov-file#puppet-github-actions) - Reuseable GHA workflow that ties everything together
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+### Funding?!
+]
+
+.right-column[
+* Since Cfgmgmtcamp 2023 we accept donations!
+
+  * [github.com/sponsors/voxpupuli](https://github.com/sponsors/voxpupuli)
+
+  * [opencollective.com/vox-pupuli](https://opencollective.com/vox-pupuli)
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+### Funding?!
+]
+
+.right-column[
+* Since Cfgmgmtcamp 2023 we accept donations!
+
+  * [github.com/sponsors/voxpupuli](https://github.com/sponsors/voxpupuli)
+
+  * [opencollective.com/vox-pupuli](https://opencollective.com/vox-pupuli)
+
+* We buy stickers (I've stickers for you!)
+
+  * Puppet/Perforce also sponsors us stickers
+
+* Our little Vox Pupuli Fox
+
+  * Come to the Puppet room to get some
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+### Funding?!
+]
+
+.right-column[
+* Since Cfgmgmtcamp 2023 we accept donations!
+
+  * [github.com/sponsors/voxpupuli](https://github.com/sponsors/voxpupuli)
+
+  * [opencollective.com/vox-pupuli](https://opencollective.com/vox-pupuli)
+
+* We buy stickers (I've stickers for you!)
+
+  * Puppet/Perforce also sponsors us stickers
+
+* Our little Vox Pupuli Fox
+
+  * Come to the Puppet room to get some
+
+* Part of Vox Pupulis success is a good working *and fast* pipeline
+
+  * GitHub sponsors us 80 concurrent runners
+
+  * Hetzner sponsors us cloud resources
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+### Funding?!
+]
+
+.right-column[
+* Since Cfgmgmtcamp 2023 we accept donations!
+
+  * [github.com/sponsors/voxpupuli](https://github.com/sponsors/voxpupuli)
+
+  * [opencollective.com/vox-pupuli](https://opencollective.com/vox-pupuli)
+
+* We pay for additional CI costs
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+### Funding?!
+]
+
+.right-column[
+* Since Cfgmgmtcamp 2023 we accept donations!
+
+  * [github.com/sponsors/voxpupuli](https://github.com/sponsors/voxpupuli)
+
+  * [opencollective.com/vox-pupuli](https://opencollective.com/vox-pupuli)
+
+* We pay for additional CI costs
+
+* We want to sponsor conference trips and meetups for our members
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+### Funding?!
+### Contribute?!
+]
+
+.right-column[
+* Please support us with donations!
+
+  * [github.com/sponsors/voxpupuli](https://github.com/sponsors/voxpupuli)
+
+  * [opencollective.com/vox-pupuli](https://opencollective.com/vox-pupuli)
+
+* Please contribute to the ecosystem!
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## Vox Pupuli
+### What?
+### Who?
+### How?
+### Funding?!
+### Contribute?!
+]
+
+.right-column[
+* Please support us with donations!
+
+  * [github.com/sponsors/voxpupuli](https://github.com/sponsors/voxpupuli)
+
+  * [opencollective.com/vox-pupuli](https://opencollective.com/vox-pupuli)
+
+* Please contribute to the ecosystem!
+
+* Check open PRs/Issues at [github.com/voxpupuli](https://github.com/voxpupuli)
+
+* Come to `#voxpupuli` on Liber.chat IRC
+
+  * Or `#voxpupuli` on [slack.puppet.com](https://slack.puppet.com/)
+
+* Come to the Puppet room B.2.015
+
+### Thanks for your attention!
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+    </textarea>
+    <script src="remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({
+        // Set the slideshow display ratio
+        // Default: '4:3'
+        // Alternatives: '16:9', ...
+        ratio: "16:9",
+        highlightStyle: "github"
+      });
+    </script>
+  </body>
+</html>
