@@ -252,15 +252,7 @@ class: center, middle, inverse
 ???
 
 ---
-class: center, middle, inversedoubleheading
 
-# Puppet Hacks
-
-## <br/>you didn't know you were looking for
-
-???
-
----
 ## $ whoami
 <img src="bastelfreak2.jpg" alt="drawing" style="float: right;width: 400px;"/>
 
@@ -280,20 +272,31 @@ class: center, middle, inversedoubleheading
 * who has seen this picture before because I reviewed/merged your pull request?
 
 ---
+
 class: center, middle, inverse
 
-# Resource Abstraction<br/>Layer
+# Bolt
+
+## Tasks & Plans
+
+???
+
+* Who knows bolt?
+---
+class: center, middle, inverse
+
+# Puppet<br/>Enterprise
 
 ???
 
 ---
 .left-column[
-## RAL
+## PE
+### What?
 ]
 
 .right-column[
-* Puppet uses RAL - Resource Abstraction Layer
-
+..smallimg[![shit](spongebob-welcome.gif)]
 ]
 
 <a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
@@ -301,17 +304,78 @@ class: center, middle, inverse
 
 ???
 
-Who knows the RAL?
+* Why shitshow? you can figure that out later
 
+* Who used PE or knows it?
 ---
-
-count: false
-
 .left-column[
-## Conclusion
+## PE
+### What?
 ]
 
 .right-column[
+.smallimg[![firewall](firewall_standard.png)]
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## PE
+### What?
+]
+
+.right-column[
+![firewall](orchestrator.drawio.svg)
+
+* Orchestrator can run Puppet tasks and Plans
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* PE Console is a web UI
+---
+
+.left-column[
+## PE
+### What?
+]
+
+.right-column[
+* What are Puppet tasks & Plans?
+
+* Like bolt task & Plans
+
+* Use the PXP agent as transport
+
+* Orchestrator is closed source, PXP agent is open source
+
+* There are subtle differences between `Bolt plans` and `Plans in PE`
+
+  * `Plans in PE` have less features?! https://www.puppet.com/docs/pe/2025.0/plans_limitations.html
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* PE Console is a web UI
+---
+
+
+
+
+
+
+
 * Puppet is very flexible and suiteable for different usecases
 
 * There are many hidden gems and extensions available
