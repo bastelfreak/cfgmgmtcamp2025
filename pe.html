@@ -974,7 +974,7 @@ The idea:
 ### Setup
 ### Constraints
 ### Job
-### Upgrade
+### Upgrade?
 ]
 
 .right-column[
@@ -998,7 +998,7 @@ count: false
 ### Setup
 ### Constraints
 ### Job
-### Upgrade
+### Upgrade?
 ]
 
 .right-column[
@@ -1023,7 +1023,7 @@ How you are supposed to Upgrade PE
 ### Setup
 ### Constraints
 ### Job
-### Upgrade
+### Upgrade?
 ]
 
 .right-column[
@@ -1046,36 +1046,7 @@ count: false
 ### Setup
 ### Constraints
 ### Job
-### Upgrade
-]
-
-.right-column[
-What's in the tarball?
-
-* Free to download for everybody
-
-* for example `puppet-enterprise-2021.7.8-el-8-x86_64.tar.gz`
-
-  * PE version specific
-
-  * OS specific
-]
-
-<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
-.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
-
-???
-
----
-
-count: false
-
-.left-column[
-## PE
-### Setup
-### Constraints
-### Job
-### Upgrade
+### Upgrade?
 ]
 
 .right-column[
@@ -1088,8 +1059,6 @@ What's in the tarball?
   * PE version specific
 
   * OS specific
-
-* contains a yum repo with some rpms and a long bash script
 ]
 
 <a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
@@ -1106,7 +1075,7 @@ count: false
 ### Setup
 ### Constraints
 ### Job
-### Upgrade
+### Upgrade?
 ]
 
 .right-column[
@@ -1121,8 +1090,6 @@ What's in the tarball?
   * OS specific
 
 * contains a yum repo with some rpms and a long bash script
-
-* one package contains puppet modules
 ]
 
 <a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
@@ -1139,7 +1106,7 @@ count: false
 ### Setup
 ### Constraints
 ### Job
-### Upgrade
+### Upgrade?
 ]
 
 .right-column[
@@ -1156,8 +1123,41 @@ What's in the tarball?
 * contains a yum repo with some rpms and a long bash script
 
 * one package contains puppet modules
+]
 
-* bash script runs puppet apply
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+]
+
+.right-column[
+What's in the tarball?
+
+* Free to download for everybody
+
+* for example `puppet-enterprise-2021.7.8-el-8-x86_64.tar.gz`
+
+  * PE version specific
+
+  * OS specific
+
+* contains a yum repo with some rpms and a long bash script
+
+* one package contains puppet modules
+
+* bash script install the rpms & runs puppet apply
 ]
 
 <a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
@@ -1172,7 +1172,7 @@ What's in the tarball?
 ### Setup
 ### Constraints
 ### Job
-### Upgrade
+### Upgrade?
 ]
 
 .right-column[
@@ -1191,7 +1191,433 @@ What's in the tarball?
 
 * We reached out to perforce, they said "nope"
 
+* Are there other ways?
+
 ---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+]
+
+.right-column[
+![upgrade w PIM](2025-01-29_15-35.png)
+
+* https://www.puppet.com/docs/pe/latest/upgrading_pe.html
+
+* PIM is a frontend around [puppetlabs-peadm](https://github.com/puppetlabs/puppetlabs-peadm)
+
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+]
+
+.right-column[
+* PIM is a frontend around Bolt & [puppetlabs-peadm](https://github.com/puppetlabs/puppetlabs-peadm)
+
+* PEADM: A module with tasks and plans to install/modify/upgrade PE
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+]
+
+.right-column[
+* PIM is a frontend around Bolt & [puppetlabs-peadm](https://github.com/puppetlabs/puppetlabs-peadm)
+
+* PEADM: A module with tasks and plans to install/modify/upgrade PE
+
+* PEADM wraps the original installer tarball
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+![installer.drawio.svg](installer.drawio.svg)
+
+* We cannot run the installer directly, because we don't have ssh access
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* We canot ssh into a service and run the installer
+
+* we don't have ssh access
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+* The Orchestrator has an API to start plans
+
+* Can it upgrade itself?
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* How can we do the upgrade?!
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+* The Orchestrator has an API to start plans
+
+* Can it upgrade itself?
+
+  * No
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+* The Orchestrator has an API to start plans
+
+* Can it upgrade itself?
+
+  * No
+
+  * orchestrator rpm needs to be upgraded and service needs to be restarted
+
+  * This will deadlock or abort the PEADM plan
+
+![simpleupgrade.drawio.svg](simpleupgrade.drawio.svg)
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+* The module [puppetlabs/service](https://forge.puppet.com/modules/puppetlabs/service/readme) has tasks to start/stop/inspect a service
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+* The module [puppetlabs/service](https://forge.puppet.com/modules/puppetlabs/service/readme) has tasks to start/stop/inspect a service
+
+* We could write a systemd unit that starts bolt with `Type=exec`
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+* The module [puppetlabs/service](https://forge.puppet.com/modules/puppetlabs/service/readme) has tasks to start/stop/inspect a service
+
+* We could write a systemd unit that starts bolt with `Type=exec`
+
+  * Then systemd will run bolt in the background (asynchronously)
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+* The module [puppetlabs/service](https://forge.puppet.com/modules/puppetlabs/service/readme) has tasks to start/stop/inspect a service
+
+* We could write a systemd unit that starts bolt with `Type=exec`
+
+  * Then systemd will run bolt in the background (asynchronously)
+
+```
+root@pe ~ # systemctl cat peadmmig@.service
+# /etc/systemd/system/peadmmig@.service
+# THIS FILE IS MANAGED BY PUPPET
+[Unit]
+Description=run bolt plans in project peadmmig
+
+[Service]
+Type=exec
+ExecStart=/opt/puppetlabs/bin/bolt plan run %i --params @/opt/peadmmig/%i.json
+User=peadmmig
+Group=peadmmig
+WorkingDirectory=/opt/peadmmig
+# don't add RemainAfterExit, then we cannot track the state via puppet anymore after bolt started
+root@pe ~ #
+```
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+* A [template service unit](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) contains a singele `@` and accepts strings afterwards
+
+* This allows us to pass plan names to our unit
+
+* `systemctl start peadmmig@profiles::convert.service`
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+* A [template service unit](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) contains a singele `@` and accepts strings afterwards
+
+* This allows us to pass plan names to our unit
+
+* `systemctl start peadmmig@profiles::convert.service`
+
+* PE doesn't have bolt installed by default
+
+* In [May 2024](https://github.com/puppetlabs/puppet-enterprise_issues/issues/34) we asked if PE could provide bolt by default
+
+  * Still no response. It was promised multiple times that someone will take a look at the issue
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+* A [template service unit](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) contains a singele `@` and accepts strings afterwards
+
+* This allows us to pass plan names to our unit
+
+* `systemctl start peadmmig@profiles::convert.service`
+
+* PE doesn't have bolt installed by default
+
+* In [May 2024](https://github.com/puppetlabs/puppet-enterprise_issues/issues/34) we asked if PE could provide bolt by default
+
+  * Still no response. It was promised multiple times that someone will take a look at the issue
+
+* Vox Pupuli now has a module to install bolt: [forge.puppet/com/puppet/bolt](https://forge.puppet.com/modules/puppet/bolt/readme)
+
+  * The module can create the systemd template service unit + all required configuration
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+![complicatedupgrade.drawio.svg](complicatedupgrade.drawio.svg)
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+
+
+
+
 * Puppet is very flexible and suiteable for different usecases
 
 * There are many hidden gems and extensions available
