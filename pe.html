@@ -744,6 +744,10 @@ count: false
 
 * When you want to deploy code changes, you need to spin up the same service again and delete the old instance
 
+* every "service type" has it's own control-repo. each deployed service gets its own branch in the control-repo
+
+* this means that no agent is running in a "production" env, but something else
+
 ---
 
 count: false
@@ -1614,7 +1618,223 @@ count: false
 
 ---
 
+count: false
 
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+]
+
+.right-column[
+
+![complicatedupgrade.drawio.svg](complicatedupgrade.drawio.svg)
+
+* During development, this worked surprisingly well
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* Is that insane or smart? I don't know
+
+* bolt is executed by systemd
+
+* bolt can restart all PE related services without issues
+
+* PE Orchestrator only needs to be available to initially start bolt, or when I want to query the status
+
+* All bolt stuff will be logged into systemd journal
+
+* we hacked this together by hand on a few test environments and it kinda worked. some obstacles
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+]
+
+.right-column[
+
+* We need our own plan that does some sanity/health checks
+
+  * If everything is fine, our plan starts the peadm::upgrade plan
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* PEADM basically assumes that you run it in a healthy environment
+
+* I don't know the services
+
+* PEADM identifies nodes by checking information in the TLS certificate. eg compiler, primary
+
+* This information only exists if you installed your environment with PEADM.
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+]
+
+.right-column[
+
+* We need our own plan that does some sanity/health checks
+
+  * If everything is fine, our plan starts the peadm::upgrade plan
+
+* We need to run peadm::convert before peadm::upgrade
+
+  * This will replace the TLS certificate on your primary
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* peadm::convert will replace TLS certificates for your primary
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+]
+
+.right-column[
+
+* We need our own plan that does some sanity/health checks
+
+  * If everything is fine, our plan starts the peadm::upgrade plan
+
+* We need to run peadm::convert before peadm::upgrade
+
+  * This will replace the TLS certificate on your primary
+
+* We need to deploy our own plans, but code deployments aren't allowed
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* as mentioned earlier, code deployments are not allowed
+
+* we did some argumentation with the architects
+
+
+---
+
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+]
+
+.right-column[
+
+* We need our own plan that does some sanity/health checks
+
+  * If everything is fine, our plan starts the peadm::upgrade plan
+
+* We need to run peadm::convert before peadm::upgrade
+
+  * This will replace the TLS certificate on your primary
+
+* We need to deploy our own plans, but code deployments aren't allowed
+
+* "No code deployments that might impact normal puppet agent operations"
+
+* PE supports multiple control repositories
+
+  * We can add another control repo, that only contains tasks/plan/modules for PE upgrades
+
+  * No agent will make a puppet run in this environment
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Cleanup
+]
+
+.right-column[
+
+What do we need to cleanup and prepare before running the upgrade
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+--
+
+
+
+
+
+
+* how to deploy code
+* different preparation steps
+* cleanup node groups / pe.conf
+* ensure PEADM uses correct node group
+* the issue with the installer URL
+* stderr redirection https://github.com/puppetlabs/puppetlabs-peadm/pull/523
+* duplicated tasks for running puppet agent
+* duplicated fact detection https://github.com/puppetlabs/puppetlabs-peadm/pull/459
 
 
 
