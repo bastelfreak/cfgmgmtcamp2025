@@ -614,7 +614,7 @@ Each service:
 
   * needs to be isolated from each other
 
-  * Has to be managed by Puppet
+  * has to be managed by Puppet
 ]
 
 <a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
@@ -665,6 +665,11 @@ Each service:
 
 ???
 
+* so each service has one VM with a primary
+* in theory never a compiler, no dedicated puppetdb, no replica
+* I don't know how other admins design their service
+* I know the PE version that was initially provisioned, I don't know if users touched it
+
 ---
 
 .left-column[
@@ -687,7 +692,7 @@ Each service:
 ???
 
 * If there's a downtime, a person with four-eye-principle can get ssh access via jump host
-
+* The "no-ssh" rule is newish, in the past people modified their services by hand
 ---
 
 count: false
@@ -782,7 +787,7 @@ count: false
 
 ???
 
-
+* All of this was built over 6? years, I joined the project last year
 ---
 .left-column[
 ## PE
@@ -898,7 +903,8 @@ count: false
 
 ???
 
-We had a discussion in the public slack and were brainstorming a bit
+* We had a discussion in the public slack and were brainstorming a bit
+* IRC and slack channels are always great to exchange ideas and discuss issues
 ---
 
 count: false
@@ -924,7 +930,7 @@ The idea:
 
 * Perforce can publish a whitepaper
 
-* We publish the solution
+* We publish the code as open source
 ]
 
 <a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
@@ -957,7 +963,7 @@ The idea:
 
 * Perforce can publish a whitepaper
 
-* We publish the solution
+* We publish the code as open source
 
 * Perforce stopped responding to all emails
 
@@ -1199,6 +1205,35 @@ What's in the tarball?
 
 ---
 
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+]
+
+.right-column[
+
+* License prohibits putting the puppet modules into my GitLab
+
+* License prohibits putting the rpms on my local mirror
+
+* With the rpms, the upgrade would be so much easier to automate
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* We could have developed a generic plan that does OS patches and include the PE rpms
+
+* Perforce management is so reluctant and stubborn
+
+---
 .left-column[
 ## PE
 ### Setup
@@ -1212,7 +1247,7 @@ What's in the tarball?
 
 * https://www.puppet.com/docs/pe/latest/upgrading_pe.html
 
-* PIM is a frontend around [puppetlabs-peadm](https://github.com/puppetlabs/puppetlabs-peadm)
+* PIM is a frontend around Bolt & [puppetlabs-peadm](https://github.com/puppetlabs/puppetlabs-peadm)
 
 
 ]
@@ -1271,6 +1306,32 @@ count: false
 
 ---
 
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+]
+
+.right-column[
+* PIM is a frontend around Bolt & [puppetlabs-peadm](https://github.com/puppetlabs/puppetlabs-peadm)
+
+* PEADM: A module with tasks and plans to install/modify/upgrade PE
+
+* PEADM wraps the original installer tarball
+
+* PEADM is compatible with PE 2019.8.1 and newer
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
 .left-column[
 ## PE
 ### Setup
@@ -1474,7 +1535,6 @@ count: false
   * Then systemd will run bolt in the background (asynchronously)
 
 ```
-root@pe ~ # systemctl cat peadmmig@.service
 # /etc/systemd/system/peadmmig@.service
 # THIS FILE IS MANAGED BY PUPPET
 [Unit]
@@ -1486,8 +1546,8 @@ ExecStart=/opt/puppetlabs/bin/bolt plan run %i --params @/opt/peadmmig/%i.json
 User=peadmmig
 Group=peadmmig
 WorkingDirectory=/opt/peadmmig
-# don't add RemainAfterExit, then we cannot track the state via puppet anymore after bolt started
-root@pe ~ #
+# don't add RemainAfterExit,
+# then we cannot track the state via puppet anymore after bolt started
 ```
 
 ]
@@ -1510,11 +1570,11 @@ root@pe ~ #
 
 .right-column[
 
-* A [template service unit](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) contains a singele `@` and accepts strings afterwards
+* A [template service unit](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) contains a single `@` and accepts strings afterwards
 
 * This allows us to pass plan names to our unit
 
-* `systemctl start peadmmig@profiles::convert.service`
+* `systemctl {status,start} peadmmig@profiles::convert.service`
 
 ]
 
@@ -1523,6 +1583,11 @@ root@pe ~ #
 
 ???
 
+* We can check if a plan is running
+
+* we can start a plan
+
+* We can then check if a plan is still running or failed or was successful
 ---
 
 count: false
@@ -1538,11 +1603,11 @@ count: false
 
 .right-column[
 
-* A [template service unit](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) contains a singele `@` and accepts strings afterwards
+* A [template service unit](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) contains a single `@` and accepts strings afterwards
 
 * This allows us to pass plan names to our unit
 
-* `systemctl start peadmmig@profiles::convert.service`
+* `systemctl {status,start} peadmmig@profiles::convert.service`
 
 * PE doesn't have bolt installed by default
 
@@ -1557,6 +1622,9 @@ count: false
 
 ???
 
+* imporant wording: they promised that the product manager will take a look at the request. They didn't promise to implement it.
+
+* And they didn't even look (or if they did, they didn't communicate it)
 ---
 
 count: false
@@ -1572,11 +1640,11 @@ count: false
 
 .right-column[
 
-* A [template service unit](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) contains a singele `@` and accepts strings afterwards
+* A [template service unit](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) contains a single `@` and accepts strings afterwards
 
 * This allows us to pass plan names to our unit
 
-* `systemctl start peadmmig@profiles::convert.service`
+* `systemctl {status,start} peadmmig@profiles::convert.service`
 
 * PE doesn't have bolt installed by default
 
@@ -1586,7 +1654,7 @@ count: false
 
 * Vox Pupuli now has a module to install bolt: [forge.puppet/com/puppet/bolt](https://forge.puppet.com/modules/puppet/bolt/readme)
 
-  * The module can create the systemd template service unit + all required configuration
+  * The module can create the systemd template service unit + all required configuration files
 ]
 
 <a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
@@ -1687,8 +1755,6 @@ count: false
 
 ---
 
-count: false
-
 .left-column[
 ## PE
 ### Setup
@@ -1704,6 +1770,36 @@ count: false
 * We need our own plan that does some sanity/health checks
 
   * If everything is fine, our plan starts the peadm::upgrade plan
+
+![morecomplicatedupgrade.drawio.svg](morecomplicatedupgrade.drawio.svg)
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* PEADM basically assumes that you run it in a healthy environment
+
+* I don't know the services
+
+* PEADM identifies nodes by checking information in the TLS certificate. eg compiler, primary
+
+* This information only exists if you installed your environment with PEADM.
+
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+]
+
+.right-column[
 
 * We need to run peadm::convert before peadm::upgrade
 
@@ -1732,10 +1828,6 @@ count: false
 ]
 
 .right-column[
-
-* We need our own plan that does some sanity/health checks
-
-  * If everything is fine, our plan starts the peadm::upgrade plan
 
 * We need to run peadm::convert before peadm::upgrade
 
@@ -1771,10 +1863,6 @@ count: false
 
 .right-column[
 
-* We need our own plan that does some sanity/health checks
-
-  * If everything is fine, our plan starts the peadm::upgrade plan
-
 * We need to run peadm::convert before peadm::upgrade
 
   * This will replace the TLS certificate on your primary
@@ -1797,7 +1885,6 @@ count: false
 
 ---
 
-
 .left-column[
 ## PE
 ### Setup
@@ -1806,7 +1893,7 @@ count: false
 ### Upgrade?
 ### Upgrade!
 ### Deployment?
-### Cleanup
+### Preparation
 ]
 
 .right-column[
@@ -1839,10 +1926,130 @@ puppet_enterprise::master::code_manager::sources:
 
 ---
 
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
 
+.right-column[
 
+* You should not specify both Hiera Keys
 
+]
 
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* technically it's possible. which is good. So we can start with a setup that has the r10k_remote option and update it inplace to the hash
+* It confuses admins because they assume only one option is set.
+
+* there are multiple places where you can configure it, not every place is lookup up always, which can lead to config flips
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* You should not specify both Hiera Keys
+
+* PE Installer takes a config file ([pe.conf](https://www.puppet.com/docs/pe/latest/config_intro.html#configure-settings-peconf)) that accepts Hiera keys
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* of course that was used for many services when they were provisioned
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* You should not specify both Hiera Keys
+
+* PE Installer takes a config file ([pe.conf](https://www.puppet.com/docs/pe/latest/config_intro.html#configure-settings-peconf)) that accepts Hiera keys
+
+* PE Console can also serve Hiera data
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* And during installation, data from the pe.conf is added to the PE Console
+* so we need to clean it up in multiple places
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* You should not specify both Hiera Keys
+
+* PE Installer takes a config file ([pe.conf](https://www.puppet.com/docs/pe/latest/config_intro.html#configure-settings-peconf)) that accepts Hiera keys
+
+* PE Console can also serve Hiera data
+
+* A cronjob dumps PE Console data to disk
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* During a upgrade, the agent does a puppet run/apply with just this Hiera data, without your usual code
+
+* this makes it important to cleanup leftovers
+
+* Those files are in hocon.
+---
 
 * how to deploy code
 * different preparation steps
