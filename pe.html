@@ -2502,12 +2502,238 @@ For properly managing Puppet:
 ???
 
 * hundred ways available to set the environment
+
 ---
 
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
 
+.right-column[
 
+Is a service in a healthy state so we can upgrade PE?
 
+  * Just one Primary, no other PE infra nodes?
 
+  * All agents delivered a report in the last 30 minutes?
+
+  * No failed resources, no cached catalog, no skipped resources?
+
+  * Same puppet agent version everywhere?
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+Is a service in a healthy state so we can upgrade PE?
+
+  * Just one Primary, no other PE infra nodes?
+
+  * All agents delivered a report in the last 30 minutes?
+
+  * No failed resources, no cached catalog, no skipped resources?
+
+  * Same puppet agent version everywhere?
+
+* [puppetlabs/pe_status_check](http://forge.puppet.com/puppetlabs/pe_status_check) contains plans to get those information
+
+  * We contributed some of them
+
+  * In the past reviews were done in a week, now it takes months to get a response
+
+  * Unclear who's responsible
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Let us glue everything together!
+
+```puppet
+plan profiles::convert (
+  Peadm::SingleTargetSpec $primary_host,
+) {
+  run_plan('profiles::subplans::precheck', { 'primary_host' => $primary_host })
+
+  # peadm::convert does two more sanity checks:
+  #   - do we have the correct bolt version
+  #   - are all nodes reachable
+  run_plan('peadm::convert', { 'primary_host' => $primary_host, '_run_as' => 'root' })
+
+  # peadm::upgrade doesn't do a final puppet run without changed resources
+  # To have a clean report, we trigger a puppet run here
+  # we  run it twice, in case we've a raise condition with an already running puppet agent
+  $params = {'_run_as' => 'root', '_catch_errors' => true }
+  $result = run_task('peadm::puppet_runonce', $primary_host, $params)
+  # ok is true if the task was successful on all targets
+  unless $result.ok {
+    out::message("Final peadm::puppet_runonce failed with: ${result}")
+    out::message('Trying another puppet run')
+    run_task('peadm::puppet_runonce', $primary_host, '_run_as' => 'root')
+  }
+}
+```
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+Open Source plans we have:
+
+* `convert` - does all the healthchecks & prepare steps & `peadm::convert`
+
+* `upgrade` - accepts a PE version as parameter, does healthcheck and then upgrades
+
+* `convertandupgradeto2021` - convert & upgrade to latest PE 2021
+
+* `convertandupgradeto2023` - convert & upgrade to latest PE 2023
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+I Would love to show you them, but they don't fit properly on the screen, it's way too much code
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+Open Source plans we have:
+
+* `convert` - does all the healthchecks & prepare steps & `peadm::convert`
+
+* `upgrade` - accepts a PE version as parameter, does healthcheck and then upgrades
+
+* `convertandupgradeto2021` - convert & upgrade to latest PE 2021
+
+* `convertandupgradeto2023` - convert & upgrade to latest PE 2023
+
+* All of this is under GPL license at [github.com/bastelfreak/testcontrolrepo](https://github.com/bastelfreak/testcontrolrepo/tree/peadm/site/profiles/plans)
+
+* Contains lots of sanity checks, tested in many many different scenarios
+
+* It works. Checkout: [github.com/bastelfreak/testcontrolrepo](https://github.com/bastelfreak/testcontrolrepo/tree/peadm?tab=readme-ov-file#demo-controlrepo-for-peadm)
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Configure `https://github.com/bastelfreak/testcontrolrepo` as your control-repo
+
+* create an environment nodegroup for `peadm`, assign your primary to it
+
+* Assign the `profiles::cleanup` and `profiles::boltprojects` classes
+
+* run your puppet agent
+
+to convert and Upgrade, take a look at the plans in `site/profiles/plans`
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+class: center, middle, inverse
+
+# Conclusion<br/><br/>
+
+???
+
+---
 
 
 
