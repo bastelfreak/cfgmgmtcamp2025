@@ -2013,6 +2013,10 @@ count: false
 
 * And during installation, data from the pe.conf is added to the PE Console
 * so we need to clean it up in multiple places
+
+* This cannot be disabled. I'm not aware of any PE installation that benefits from this "feature"
+
+* Again we asked roughly a year ago to make it optional to to remove this feature, not a single response
 ---
 
 count: false
@@ -2036,7 +2040,7 @@ count: false
 
 * PE Console can also serve Hiera data
 
-* A cronjob dumps PE Console data to disk
+* A cronjob dumps PE Console data to disk (user_data.conf)
 ]
 
 <a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
@@ -2048,8 +2052,464 @@ count: false
 
 * this makes it important to cleanup leftovers
 
+* In the puppet ecosystem, which file format would you expect if you store hiera keys?
+
 * Those files are in hocon.
 ---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* You should not specify both Hiera Keys
+
+* PE Installer takes a config file ([pe.conf](https://www.puppet.com/docs/pe/latest/config_intro.html#configure-settings-peconf)) that accepts Hiera keys
+
+* PE Console can also serve Hiera data
+
+* A cronjob dumps PE Console data to disk (user_data.conf)
+
+* pe.conf and user_data.conf use HOCON format
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* Would you expect that Puppet core or stdlib have a function to write HOCON?
+---
+
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* You should not specify both Hiera Keys
+
+* PE Installer takes a config file ([pe.conf](https://www.puppet.com/docs/pe/latest/config_intro.html#configure-settings-peconf)) that accepts Hiera keys
+
+* PE Console can also serve Hiera data
+
+* A cronjob dumps PE Console data to disk (user_data.conf)
+
+* pe.conf and user_data.conf use HOCON format
+
+* Puppet core/stdlib have no function to write HOCON
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* There's a function to parse HOCON
+
+* As a hack we can stdlib::to_json_pretty() function
+
+* the files can contain comments, they will be deleted
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Every deployed service has their own control repo branch
+
+  * No agents runs in a production environment
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* This is totally fine, puppet agent works
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Every deployed service has their own control repo branch
+
+  * No agents runs in a production environment
+
+* PE Console in some versions requires a production environment to interact with plans
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* This is fixed in recent versions, I don't know anymore when it was fixed
+* This was only relevant for the UI, not for the API, so it didn't effect us
+* We used the UI during tests
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Every deployed service has their own control repo branch
+
+  * No agents runs in a production environment
+
+* PE Console in some versions requires a production environment to interact with plans
+
+* PEADM assumes that a production branch exists
+
+  * This isn't listed as a requirement anywhere
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Every deployed service has their own control repo branch
+
+  * No agents runs in a production environment
+
+* PE Console in some versions requires a production environment to interact with plans
+
+* PEADM assumes that a production branch exists
+
+  * This isn't listed as a requirement anywhere
+
+  * We reported this in July 2024
+
+  * This was a blocker for the biggest PE customer I ever met
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Every deployed service has their own control repo branch
+
+  * No agents runs in a production environment
+
+* PE Console in some versions requires a production environment to interact with plans
+
+* PEADM assumes that a production branch exists
+
+  * This isn't listed as a requirement anywhere
+
+  * We reported this in July 2024
+
+  * This was a blocker for the biggest PE customer I ever met
+
+  * We did our own debugging and proposed a fix in August 2024
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Every deployed service has their own control repo branch
+
+  * No agents runs in a production environment
+
+* PE Console in some versions requires a production environment to interact with plans
+
+* PEADM assumes that a production branch exists
+
+  * This isn't listed as a requirement anywhere
+
+  * We reported this in July 2024
+
+  * This was a blocker for the biggest PE customer I ever met
+
+  * We did our own debugging and proposed a fix in August 2024
+
+  * This is still not released, Engineering and product owner ignore all slack/email messages
+
+  * We had escalation meetings with our sales rep and some engineers in September
+
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* Also they are not directly reachable via a support ticket
+* I don't know for sure who is actually responsible
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Required Hiera keys when the Primary isn't running in production
+
+```yaml
+pe_install::install::classification::pe_node_group_environment: 'foo'
+puppet_enterprise::master::recover_configuration::pe_environment: 'foo'
+```
+
+  * Only required for inplace updates
+
+  * [puppet.com/docs/pe/latest/upgrading_pe.html](https://www.puppet.com/docs/pe/latest/upgrading_pe.html#update_environment)
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* Customer made a mistake, PE requires you to set those two keys to the environment name that the primary uses
+
+* this is documented
+
+* customer never did inplace updates before and never read the upgrade docs, so this wasn't configured
+---
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Puppet agent sometimes starts a run in production environment
+
+* ENC tells the agent the correct environment
+
+* puppet agent starts again
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* The behaviour for determining the correct environment changed a bit in past years
+
+* Agent tries to remember the past environment and reuse that for the next run
+
+* during an agent upgrade, the state can get lost
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Puppet agent sometimes starts a run in production environment
+
+* ENC tells the agent the correct environment
+
+* puppet agent starts again
+
+```puppet
+ini_setting { 'puppet.conf environment':
+  ensure  => 'present',
+  path    => '/etc/puppetlabs/puppet/puppet.conf',
+  section => 'agent',
+  setting => 'environment',
+  value   => $env,
+}
+```
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* hundred ways available to set the environment
+---
+
+count: false
+
+.left-column[
+## PE
+### Setup
+### Constraints
+### Job
+### Upgrade?
+### Upgrade!
+### Deployment?
+### Preparation
+]
+
+.right-column[
+
+* Puppet agent sometimes starts a run in production environment
+
+* ENC tells the agent the correct environment
+
+* puppet agent starts again
+
+```puppet
+ini_setting { 'puppet.conf environment':
+  ensure  => 'present',
+  path    => '/etc/puppetlabs/puppet/puppet.conf',
+  section => 'agent',
+  setting => 'environment',
+  value   => $env,
+}
+```
+
+For properly managing Puppet:
+
+* [forge.puppet.com/puppetlabs/puppet_agent](https://forge.puppet.com/modules/puppetlabs/puppet_agent)
+
+  * By default ignores the puppet.conf on your PE Infra
+
+* [forge.puppet.com/theforeman/puppet](https://forge.puppet.com/modules/theforeman/puppet)
+]
+
+<a href='https://betadots.de' alt='company website betadots'><img src="logo-1181x1181.png" alt="drawing" style="position: fixed; bottom: 12px; left: 20px; width: 100px;"/></a>
+.footnote[[@bastelsblog](https://twitter.com/bastelsblog) for [@voxpupuliorg](https://twitter.com/voxpupuliorg)]
+
+???
+
+* hundred ways available to set the environment
+---
+
+
+
+
+
+
+
 
 * how to deploy code
 * different preparation steps
